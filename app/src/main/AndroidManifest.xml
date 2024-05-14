@@ -21,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddBookActivity" android:exported="false"/>
+        <activity android:name=".EditBookActivity" android:exported="false"/>
     </application>
 
 </manifest>
