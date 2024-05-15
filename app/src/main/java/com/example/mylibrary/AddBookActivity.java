@@ -1,5 +1,6 @@
 package com.example.mylibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mylibrary.databases.DatabaseHelper;
+import com.example.mylibrary.databases.DatabaseManager;
+import com.example.mylibrary.models.Book;
 
 public class AddBookActivity extends AppCompatActivity {
     private EditText editBookTitle, editBookAuthor, editBookGenre, editBookSynopsis;
@@ -66,9 +71,25 @@ public class AddBookActivity extends AppCompatActivity {
         });
     }
 
-    public void lexo(View v) {
-        String title = String.valueOf(editBookTitle.getText());
-        String author = String.valueOf(editBookAuthor.getText());
-        Toast.makeText(getApplicationContext(), "Libri " + title + ", shkruar nga " + author, Toast.LENGTH_LONG).show();
+    public void createBook(View v) {
+        try {
+            Book book = new Book(
+                    editBookTitle.getText().toString(),
+                    editBookAuthor.getText().toString(),
+                    editBookGenre.getText().toString(),
+                    editBookSynopsis.getText().toString());
+
+            DatabaseHelper db = new DatabaseHelper(AddBookActivity.this);
+            if (db.createBook(book))
+                Toast.makeText(AddBookActivity.this, "New book added to the Library", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(AddBookActivity.this, "Something went wrong, please try again later!", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e) {
+            Toast.makeText(AddBookActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        Intent redirectToMainPage = new Intent(AddBookActivity.this, MainActivity.class);
+        startActivity(redirectToMainPage);
     }
 }

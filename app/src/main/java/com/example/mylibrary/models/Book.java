@@ -1,7 +1,5 @@
 package com.example.mylibrary.models;
 
-import java.util.Objects;
-
 public class Book {
     private String title;
     private String author;
@@ -52,11 +50,4 @@ public class Book {
         this.synopsis = synopsis;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
-        return Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(genre, book.genre) && Objects.equals(synopsis, book.synopsis);
-    }
 }
