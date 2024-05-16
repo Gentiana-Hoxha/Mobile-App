@@ -1,12 +1,22 @@
 package com.example.mylibrary.models;
 
 public class Book {
+
+    private long id;
     private String title;
     private String author;
     private String genre;
     private String synopsis;
 
     public Book(String title, String author, String genre, String synopsis) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.synopsis = synopsis;
+    }
+
+    public Book(long id, String title, String author, String genre, String synopsis) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -50,4 +60,6 @@ public class Book {
         this.synopsis = synopsis;
     }
 
+    public long getId() {return id;}
+    public void setId(long id) {this.id = id;}
 }

@@ -14,7 +14,7 @@ import com.example.mylibrary.models.Book;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "library.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_BOOKS = "Library";
     private static final String COLUMN_ID = "id";
@@ -35,10 +35,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version, @Nullable DatabaseErrorHandler errorHandler) {
-        super(context, name, factory, version, errorHandler);
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_BOOKS_TABLE);
@@ -57,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_GENRE, book.getGenre());
         values.put(COLUMN_SYNOPSIS, book.getSynopsis());
         long result = db.insert(TABLE_BOOKS, null, values);
+        db.close();
         return result != -1;
     }
 
@@ -69,5 +66,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
         return cursor;
+    }
+
+    public Book getBookById(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ID, COLUMN_TITLE, COLUMN_AUTHOR, COLUMN_GENRE, COLUMN_SYNOPSIS};
+        String selection = COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_BOOKS, columns, selection, selectionArgs, null, null, null);
+        Book book = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            String title = cursor.getString(1);
+            String author = cursor.getString(2);
+            String genre = cursor.getString(3);
+            String synopsis = cursor.getString(4);
+            book = new Book(title, author, genre, synopsis);
+            book.setId(id);
+            cursor.close();
+        }
+        db.close();
+        return book;
+    }
+
+    public void deleteBook(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(id)};
+        db.delete(TABLE_BOOKS, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void editBook(Book book) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, book.getTitle());
+        values.put(COLUMN_AUTHOR, book.getAuthor());
+        values.put(COLUMN_GENRE, book.getGenre());
+        values.put(COLUMN_SYNOPSIS, book.getSynopsis());
+        String whereClause = COLUMN_ID + " = ?";
+        String[] whereArgs = {String.valueOf(book.getId())};
+        db.update(TABLE_BOOKS, values, whereClause, whereArgs);
+        db.close();
     }
 }

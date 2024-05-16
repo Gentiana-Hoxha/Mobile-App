@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylibrary.databases.DatabaseHelper;
-import com.example.mylibrary.databases.DatabaseManager;
 import com.example.mylibrary.models.Book;
 
 public class AddBookActivity extends AppCompatActivity {
