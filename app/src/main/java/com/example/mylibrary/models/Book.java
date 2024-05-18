@@ -1,12 +1,13 @@
 package com.example.mylibrary.models;
 
-import java.util.Objects;
-
 public class Book {
+    private int id;
     private String title;
     private String author;
     private String genre;
     private String synopsis;
+
+    public Book() {};
 
     public Book(String title, String author, String genre, String synopsis) {
         this.title = title;
@@ -15,9 +16,21 @@ public class Book {
         this.synopsis = synopsis;
     }
 
-    @Override
-    public String toString() {
-        return title;
+    public Book(int id, String title, String author, String genre, String synopsis) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.synopsis = synopsis;
+    }
+
+    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -50,13 +63,5 @@ public class Book {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
-        return Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(genre, book.genre) && Objects.equals(synopsis, book.synopsis);
     }
 }

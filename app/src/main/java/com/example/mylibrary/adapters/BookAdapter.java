@@ -1,6 +1,7 @@
 package com.example.mylibrary.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.mylibrary.EditBookActivity;
 import com.example.mylibrary.R;
 import com.example.mylibrary.models.Book;
 
@@ -50,13 +52,11 @@ public class BookAdapter extends ArrayAdapter<Book> {
             }
         }
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (book != null) {
-                    Toast.makeText(context, "Libri " + book.getTitle() + ", shkruar nga " + book.getAuthor(), Toast.LENGTH_LONG).show();
-                }
-            }
+        convertView.setOnClickListener(view -> {
+            Intent redirectToEditBook = new Intent(context, EditBookActivity.class);
+            int bookId = book.getId();
+            redirectToEditBook.putExtra("key", bookId);
+            context.startActivity(redirectToEditBook);
         });
 
         return convertView;
