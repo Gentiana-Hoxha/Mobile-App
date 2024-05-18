@@ -79,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:onClick="createBook"
             android:text="Save" />
 
         <Space
@@ -90,9 +89,19 @@
             android:id="@+id/deleteBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:onClick="createBook"
             android:text="Delete" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goBackToMainPage"
+            android:text="Cancel"
+            android:textColorLink="#2DFFFFFF" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

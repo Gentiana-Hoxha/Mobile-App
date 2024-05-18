@@ -6,44 +6,99 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@color/white"
+        app:itemRippleColor="#FFFFFF"
+        app:itemTextColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/addBookButton"
+            android:layout_width="293dp"
+            android:layout_height="66dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="60dp"
+            android:text="Add Book" />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="fill|fill_horizontal|fill_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
             android:padding="10dp"
-            android:text="Library"
+            android:text="Reading Journal"
             android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="34sp" />
 
-        <GridView
-            android:id="@+id/booksList"
+        <LinearLayout
+            android:id="@+id/noBooksPlaceholder"
             android:layout_width="match_parent"
-            android:layout_height="551dp"
-            android:padding="24px">
+            android:layout_height="40dp"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-        </GridView>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#673AB7"
+                tools:visibility="visible" />
 
-        <Space
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="You haven't read any books yet!"
+                android:textAlignment="center"
+                android:textColor="#673AB7"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#673AB7"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/addBookButton"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:text="Add Book" />
+            <GridView
+                android:id="@+id/booksList"
+                android:layout_width="match_parent"
+                android:layout_height="557dp"
+                android:padding="24px">
+
+            </GridView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

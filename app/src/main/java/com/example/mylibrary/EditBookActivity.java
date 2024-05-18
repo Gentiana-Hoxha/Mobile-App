@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,14 +25,15 @@ public class EditBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_book);
 
         Intent intent = getIntent();
-        long id = intent.getLongExtra("key", 0);
+        int id = intent.getIntExtra("key", 0);
 
         try {
-            Book book = db.getBookById(id);
+            Book book = db.getBook(id);
             editBookTitle = (EditText) findViewById(R.id.bookTitle);
             editBookAuthor = (EditText) findViewById(R.id.bookAuthor);
             editBookGenre = (EditText) findViewById(R.id.bookGenre);
             editBookSynopsis = (EditText) findViewById(R.id.bookSynopsis);
+
             editBook = (Button) findViewById(R.id.editBook);
             deleteBook = (Button) findViewById(R.id.deleteBook);
 
@@ -39,10 +42,13 @@ public class EditBookActivity extends AppCompatActivity {
             editBookGenre.setText(book.getGenre());
             editBookSynopsis.setText(book.getSynopsis());
 
+            editBook.setEnabled(true);
+
             listenForInputChange();
-            listenForEditBook();
+            listenForEditBook(id);
             listenForDeleteBook(id);
         } catch (Error error) {
+            Toast.makeText(EditBookActivity.this, "Something went wrong while trying to edit Book, please try again later", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -85,28 +91,31 @@ public class EditBookActivity extends AppCompatActivity {
         });
     }
 
-    private void listenForEditBook() {
-        editBookAuthor.setOnClickListener(view2 -> {
+    private void listenForEditBook(int id) {
+        editBook.setOnClickListener(view -> {
             Book book = new Book(
+                    id,
                     editBookTitle.getText().toString(),
                     editBookAuthor.getText().toString(),
                     editBookGenre.getText().toString(),
                     editBookSynopsis.getText().toString());
 
-            db.editBook(book);
-            goBackToMainPage();
+            db.updateBook(book);
+            Intent redirectToMain = new Intent(this, MainActivity.class);
+            startActivity(redirectToMain);
         });
     }
 
-    private void listenForDeleteBook(long id) {
-        deleteBook.setOnClickListener(view3 -> {
+    private void listenForDeleteBook(int id) {
+        deleteBook.setOnClickListener(view -> {
             db.deleteBook(id);
-            goBackToMainPage();
+            Intent redirectToMainPage = new Intent(this, MainActivity.class);
+            startActivity(redirectToMainPage);
         });
     }
 
-    private void goBackToMainPage() {
-        Intent redirectToMain = new Intent(EditBookActivity.this, MainActivity.class);
+    public void goBackToMainPage(View v) {
+        Intent redirectToMain = new Intent(this, MainActivity.class);
         startActivity(redirectToMain);
     }
 }

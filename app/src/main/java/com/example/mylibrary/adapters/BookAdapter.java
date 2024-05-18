@@ -54,9 +54,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         convertView.setOnClickListener(view -> {
             Intent redirectToEditBook = new Intent(context, EditBookActivity.class);
-
-            long bookId = book.getId();
-
+            int bookId = book.getId();
             redirectToEditBook.putExtra("key", bookId);
             context.startActivity(redirectToEditBook);
         });

@@ -78,5 +78,17 @@
             android:onClick="createBook"
             android:text="Create" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goBackToMainPage"
+            android:text="Cancel"
+            android:textColorLink="#2DFFFFFF" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
